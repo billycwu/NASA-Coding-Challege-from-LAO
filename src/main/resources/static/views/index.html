@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body ng-app="nasa">
+ha ha index!!!
+<div class="container" ng-controller="NasaController">
+	<div class="row">
+		<select ng-model="selectedDate" ng-options="x for x in requiredEarthDates" 
+				ng-change="getAllPhotosForTheDate()" >
+			<option value="">--Select A Date--</option>
+		</select>
+	</div>
+	
+	<div class="row" ng-repeat="photo in allPhotosForTheDate.photos">
+        <div class="">
+        	<a href="http://localhost:8080/nasathingy/image?img_src={{photo.img_src}}">{{photo.id}}</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <p>{{allPhotosForTheDate | json}}</p>
+    </div>
+</div>
+</body>
+
+
+<script src="js/lib/angular.min.js"></script>
+<script src="js/lib/ui-bootstrap-tpls-2.5.0.min.js"></script>
+<script>
+var app = angular.module('nasa', []);
+app.controller('NasaController', function($scope, $http) {
+	$http.get("/requiredearthdates")
+	.then(function(response) {
+      	$scope.requiredEarthDates = response.data.requiredEarthDates;
+  	});
+	
+	$scope.getAllPhotosForTheDate = function() {
+		$http.get("http://localhost:8080/nasathingy/photos?earthdate="+$scope.selectedDate)
+		.then(function(response) {
+			console.log("works");
+	      	$scope.allPhotosForTheDate = response.data;
+	      	console.log("done");
+		}, function(reason) {
+			console.log("oops, error occured:" + reason);
+		});
+	}
+});
+</script>
+</html>
