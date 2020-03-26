@@ -2,24 +2,30 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>NASA Coding Challenge</title>
 </head>
 <body ng-app="nasa">
-ha ha index!!!
+
 <div class="container" ng-controller="NasaController">
+	<h1>NASA Coding Challenge</h1>
+	<div class="row">
+		Please select an earth date to see a list of pictures for that date
+	</div>
 	<div class="row">
 		<select ng-model="selectedDate" ng-options="x for x in requiredEarthDates" 
 				ng-change="getAllPhotosForTheDate()" >
 			<option value="">--Select A Date--</option>
 		</select>
 	</div>
-	
+	<hr/>
 	<div class="row" ng-repeat="photo in allPhotosForTheDate.photos">
         <div class="">
-        	<a href="http://localhost:8080/nasathingy/image?img_src={{photo.img_src}}">{{photo.id}}</a>
+        	<a href="http://localhost:8080/nasathingy/image?img_src={{photo.img_src}}">
+        		Rover name:  {{photo.rover.name}} | Camera name:  {{photo.camera.full_name}} | Photo ID:  {{photo.id}} 
+        	</a>
         </div>
     </div>
-
+	<hr/>
     <div class="row">
         <p>{{allPhotosForTheDate | json}}</p>
     </div>
@@ -29,6 +35,8 @@ ha ha index!!!
 
 <script src="js/lib/angular.min.js"></script>
 <script src="js/lib/ui-bootstrap-tpls-2.5.0.min.js"></script>
+<link rel="stylesheet" href="css/lib/bootstrap.min.css"/>
+<link rel="stylesheet" href="css/app/app.css"/>
 <script>
 var app = angular.module('nasa', []);
 app.controller('NasaController', function($scope, $http) {

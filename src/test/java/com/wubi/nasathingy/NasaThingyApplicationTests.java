@@ -1,9 +1,9 @@
-package com.wu.nasathingy;
+package com.wubi.nasathingy;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-//@SpringBootTest
+@SpringBootTest(classes = NasaThingyApplication.class)
 class NasaThingyApplicationTests {
 
 	@Test

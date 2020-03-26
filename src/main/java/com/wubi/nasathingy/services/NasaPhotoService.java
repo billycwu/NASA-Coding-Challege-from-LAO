@@ -66,12 +66,9 @@ public class NasaPhotoService {
 		if (Files.exists(filePath)) {
 			logger.info("Retrieving image locally: {}", filePath);
 			try {
-				BufferedImage bImage = ImageIO.read(new File("sample.jpg"));
-				ByteArrayOutputStream bos = new ByteArrayOutputStream();
-				ImageIO.write(bImage, "jpg", bos);
-				image = bos.toByteArray();
+				image = Files.readAllBytes(filePath);
 			} catch (IOException e) {
-				logger.warn("Unable to retrieve the image file {}.  Getting it from NASA.", e);
+				logger.warn("Unable to retrieve the image file {}.  Getting it from NASA.", filePath, e);
 				image = fetchAndStore(imageUrl).getBody();
 			}
 		} else {

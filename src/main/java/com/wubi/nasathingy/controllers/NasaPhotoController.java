@@ -25,7 +25,6 @@ public class NasaPhotoController {
 	public Photos getPhotosForADate(@RequestParam ("earthdate") String earthDate) {
 		logger.debug("entering photos with earthDate {}", earthDate);
 		Photos photos = nasaPhotoService.getPhotos(earthDate); 
-		logger.info("photos are:" + photos);
 		return photos;
 	}
 	
